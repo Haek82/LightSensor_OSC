@@ -16,6 +16,8 @@ int memSlotsMacAddress[] = {101, 102, 103, 104, 105, 106};
 // ################################### COMMON VARIABLES ####################################################
 #define PowerLed (7)
 
+bool debug = true;
+
 hp_BH1750 BH1750;       //  create the sensor
 
 // ################################### ETHERNET SHIELD VARIABLES ################################################
@@ -193,6 +195,7 @@ void loop() {
       Serial.println("localMask <mask> \t\t localMask changes the subnet mask on the Arduino\n");
 
       Serial.println("show config \t\t\t shows current network config in use.");
+      debug = false;
     }
 
     else if(in_chars.indexOf("show config") == 0){
@@ -260,7 +263,9 @@ void loop() {
 
   if (BH1750.hasValue() == true){
     float luxValue = BH1750.getLux();
-    Serial.println(luxValue);
+    if (debug){
+      Serial.println(luxValue);
+    }
     BH1750.start();
    
     msg.add(luxValue);
